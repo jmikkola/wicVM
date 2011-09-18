@@ -10,8 +10,10 @@ typedef struct {
     int size;
     int space;
     Location *data;
-} Memory;
+} Machine;
 
-void execute (Memory *code);
+void execute (Machine *code);
+
+void free_machine (Machine *machine);
 
 #endif

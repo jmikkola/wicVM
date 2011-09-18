@@ -27,4 +27,6 @@ typedef struct {
 
 Code* readInstructions (FILE *inf);
 
+void free_code (Code *code);
+
 #endif

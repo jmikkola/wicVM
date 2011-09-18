@@ -9,12 +9,12 @@
 #include "compile.h"
 
 void printUsage (void);
+Machine* readMachine (FILE* inf);
+void timeExecution (Machine *machine);
 
 int main (int argc, char **argv) {
-    Code *code;
-    Memory *memory;
+    Machine *machine;
     FILE *inf;
-    clock_t startTime, endTime;
     
     // check for argument
     if (argc < 2) {
@@ -29,25 +29,32 @@ int main (int argc, char **argv) {
         return 1;
     }
 
-    // read instruction, check result
-    code = readInstructions (inf);
-    fclose(inf);
-    if (! code) 
-        error("could not read instructions");
+    // Get the machine
+    machine = readMachine(inf);
 
-    // Compile into memory type
-    memory = compile(code);
-    if (! memory)
-        error("could not compile code into memory");
+    // Run and time the execution
+    timeExecution(machine);
 
-    // time the execution
+    // Free the memory used by the machine
+    free_machine(machine);
+
+    return EXIT_SUCCESS;
+}
+
+void timeExecution (Machine *machine) {
+    clock_t startTime, endTime;
     startTime = clock();
-    execute(memory);
+    execute(machine);
     endTime = clock();
     printf("Finished in %.3f seconds\n", 
            (endTime - startTime) / ((double) CLOCKS_PER_SEC));    
+}
 
-    return EXIT_SUCCESS;
+Machine* readMachine (FILE *inf) {
+    Code *code = readInstructions(inf);
+    Machine *m = compile(code);
+    free_code(code);
+    return m;
 }
 
 

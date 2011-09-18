@@ -9,7 +9,6 @@
 
 // Code "member functions"
 Code* newCode (void);
-void freeCode (Code *code);
 void  addInstruction (Code *code, char *opcode, char *operand);
 // Helper functions
 void eatLine (FILE *inf);
@@ -34,7 +33,7 @@ Code* readInstructions (FILE *inf) {
             if (fscanf(inf, "%20s", operand) != 1) {
                 // Handle an error reading the operand
                 printf("could not read operand for %s\n", opcode);
-                freeCode(code);
+                free_code(code);
                 return 0;
             }
         } else {
@@ -57,7 +56,7 @@ Code* newCode () {
 }
 
 // Frees the memory taken by a code object
-void freeCode (Code *code) {
+void free_code (Code *code) {
     free(code->list);
     free(code);
 }

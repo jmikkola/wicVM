@@ -20,7 +20,6 @@ typedef struct {
 
 StringMap* mapCreate (void);
 void mapFree (StringMap *map);
-int mapAdd (StringMap *map, char *string, int value);
 int mapSet (StringMap *map, char *string, int value);
 int mapGet (StringMap *map, char *string);
 int mapIn (StringMap *map, char *string);
