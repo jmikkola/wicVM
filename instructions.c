@@ -8,7 +8,7 @@
 
 void execute (Machine *machine) {
     Instruction *instructions = machine->data, *instr;
-    StringMap *variables = machine->symbols;
+    char (**variables) = machine->symbols;
     int *memory = machine->memory;
     int *stack = (int*) calloc(STACK_DEF_SIZE, sizeof(int));
     int *sp = stack - 1, *stackTop = stack + STACK_DEF_SIZE - 1;
@@ -28,12 +28,12 @@ void execute (Machine *machine) {
         // Switch on the opcode
         switch (instr->opcode) {
         case getOp:
-            printf("enter %s > ", "unknown");
+            printf("enter %s > ", variables[instr->operand]);
             if (scanf("%d", memory + instr->operand) != 1)
                 error("couldn't read value from keyboard");
             break;
         case putOp:
-            printf("%s = %d\n", "unknown", memory[instr->operand]);
+            printf("%s = %d\n", variables[instr->operand], memory[instr->operand]);
             break;
         case pushOp:
             sp++;
@@ -63,8 +63,11 @@ void execute (Machine *machine) {
 
 // Frees the memory used by a machine
 void free_machine (Machine *machine) {
+    int i;
+    for (i = 0; i < machine->nsymbols; i++) 
+        free(machine->symbols[i]);
     free(machine->data);
-    mapFree(machine->symbols);
+    free(machine->symbols);
     free(machine->memory);
     free(machine);
 }

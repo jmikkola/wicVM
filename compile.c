@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "general.h"
 #include "map.h"
@@ -29,7 +30,8 @@ Machine* compile (Code *code) {
     jumps = readJumps(code);
     // Set data and memory
     m = makeMachine(code, symbols, jumps);
-    // Jump table no longer needed:
+    // Tables are no longer needed:
+    mapFree(symbols);
     mapFree(jumps);
     return m;
 }
@@ -51,10 +53,21 @@ Machine* makeMachine (Code *code, StringMap *symbols, StringMap *jumps) {
         instr->operand = getOperand(op, symbols, jumps);
         ind++;
     }
-    // Set up other parts
-    m->memory = makeMemory(symbols);
-    m->symbols = symbols;
     m->size = ind;
+    // Set up name table
+    m->nsymbols = mapSize(symbols);
+    m->symbols = calloc(m->nsymbols, sizeof(char*));
+    for (i = 0; i < symbols->arrSize; i++) {
+        MapItem *item = symbols->array[i];
+        while (item) {
+            int index = item->value;
+            m->symbols[index] = calloc(20, sizeof(char));
+            strncpy(m->symbols[index], item->string, 20);
+            item = item->next;
+        }
+    }
+    // Set up memory
+    m->memory = makeMemory(symbols);
     return m;
 }
 
@@ -101,6 +114,7 @@ Machine* machineCreate () {
     Machine *m = (Machine*) malloc(sizeof(Machine));
     m->size = 0;
     m->space = MACHINE_DEF_SIZE;
+    m->nsymbols = 0;
     m->data = (Instruction*) calloc(MACHINE_DEF_SIZE, sizeof(Instruction));
     m->symbols = NULL;
     m->memory = NULL;

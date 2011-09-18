@@ -12,8 +12,9 @@ typedef struct {
 typedef struct {
     int size;
     int space;
+    int nsymbols;
     Instruction *data;
-    StringMap *symbols;
+    char **symbols;
     int *memory;
 } Machine;
 
