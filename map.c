@@ -87,7 +87,7 @@ void mapPrint (StringMap *map) {
     for (i = 0; i < map->arrSize; i++) {
         item = map->array[i];
         while (item) {
-            printf("%3d :: \"%s\"[%d]\n", item->value, item->string, item->hash);
+            printf("%3d :: \"%s\"\n", item->value, item->string);
             item = item->next;
         }
     }

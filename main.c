@@ -32,6 +32,7 @@ int main (int argc, char **argv) {
 
     // Get the machine
     machine = readMachine(inf);
+    fclose(inf);
 
     // Run and time the execution
     timeExecution(machine);

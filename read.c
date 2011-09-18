@@ -34,7 +34,7 @@ Code* readInstructions (FILE *inf) {
             if (fscanf(inf, "%20s", operand) != 1) {
                 // Handle an error reading the operand
                 printf("could not read operand for %s\n", opcode);
-                free_code(code);
+                error(NULL);
                 return 0;
             }
         } else {
