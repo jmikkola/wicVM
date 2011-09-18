@@ -1,4 +1,4 @@
 
 wici: *.c *.h makefile
-	gcc -O2 -g -o wici *.c
+	gcc -O2 -o wici *.c
 

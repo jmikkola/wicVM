@@ -89,6 +89,45 @@ void execute (Machine *machine) {
                 error("Insufficient stack size for not");
             *sp = !sp[0];
             break;
+        case tsteqOp:
+            if (sp < stack)
+                error("Insufficient stack size for test");
+            *sp = sp[0] == 0;
+            break;
+        case tstneOp:
+            if (sp < stack)
+                error("Insufficient stack size for test");
+            *sp = sp[0] != 0;
+            break;
+        case tstltOp:
+            if (sp < stack)
+                error("Insufficient stack size for test");
+            *sp = sp[0] < 0;
+            break;
+        case tstleOp:
+            if (sp < stack)
+                error("Insufficient stack size for test");
+            *sp = sp[0] <= 0;
+            break;
+        case tstgtOp:
+            if (sp < stack)
+                error("Insufficient stack size for test");
+            *sp = sp[0] > 0;
+            break;
+        case tstgeOp:
+            if (sp < stack)
+                error("Insufficient stack size for test");
+            *sp = sp[0] >= 0;
+            break;
+        case jumpOp:
+            pc = instr->operand;
+            break;
+        case jfOp:
+            if (sp < stack)
+                error("Insufficient stack size for jf");
+            if (*(sp--) == 0)
+                pc = instr->operand;
+            break;
         case haltOp:
             pc = -1;
             break;
