@@ -52,6 +52,43 @@ void execute (Machine *machine) {
             sp--;
             *sp += sp[1];
             break;
+        case subOp:
+            if (sp < stack + 1)
+                error("Insufficient stack size for sub");
+            sp--;
+            *sp -= sp[1];
+            break;
+        case mulOp:
+            if (sp < stack + 1)
+                error("Insufficient stack size for mul");
+            sp--;
+            *sp *= sp[1];
+            break;
+        case divOp:
+            if (sp < stack + 1)
+                error("Insufficient stack size for div");
+            sp--;
+            if (sp[1] == 0)
+                error("Divide by zero");
+            *sp /= sp[1];
+            break;
+        case andOp:
+            if (sp < stack + 1)
+                error("Insufficient stack size for and");
+            sp--;
+            *sp = sp[0] && sp[1];
+            break;
+        case orOp:
+            if (sp < stack + 1)
+                error("Insufficient stack size for or");
+            sp--;
+            *sp = sp[0] || sp[1];
+            break;
+        case notOp:
+            if (sp < stack)
+                error("Insufficient stack size for not");
+            *sp = !sp[0];
+            break;
         case haltOp:
             pc = -1;
             break;

@@ -6,7 +6,7 @@
 #include "map.h"
 
 void expand (StringMap *map);
-int hash (char *string);
+unsigned hash (char *string);
 void mapItemFree (MapItem *item);
 MapItem* makeMapItem (char *string, int value, int hash, MapItem *next);
 MapItem* findMapItem (StringMap *map, char *string);
@@ -41,7 +41,7 @@ void mapItemFree (MapItem *item) {
 // Returns 1 if this was an update, 0 if 
 // the string is new.
 int mapSet (StringMap *map, char *string, int value) {
-    int shash, index;
+    unsigned shash, index;
     MapItem *item = findMapItem(map, string);
     // Replace old value, if exists
     if (item) {
@@ -96,8 +96,8 @@ void mapPrint (StringMap *map) {
 
 
 // Compute a hash value for the string
-int hash (char *s) {
-    int out = 0;
+unsigned hash (char *s) {
+    unsigned out = 0;
     while (*s)
         out = 31*out + *(s++);
     return out;
@@ -120,7 +120,7 @@ MapItem* makeMapItem (char *string, int value, int hash, MapItem *next) {
 
 // Finds a map item by string
 MapItem* findMapItem (StringMap *map, char *string) {
-    int shash = hash(string);
+    unsigned shash = hash(string);
     int index = shash % map->arrSize;
     MapItem *item = map->array[index];
     while (item) {

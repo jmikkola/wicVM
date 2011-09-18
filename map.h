@@ -8,7 +8,7 @@
 typedef struct MapItem {
     char string[MAP_STR_SIZE];
     int value;
-    int hash;
+    unsigned hash;
     struct MapItem *next;
 } MapItem;
 
