@@ -12,9 +12,10 @@ void execute (Machine *machine) {
     int *memory = machine->memory;
     int *stack = (int*) calloc(STACK_DEF_SIZE, sizeof(int));
     int *sp = stack - 1, *stackTop = stack + STACK_DEF_SIZE - 1;
-    int pc = 0, memSize = machine->size;
+    int pc = 0, memSize = machine->size, count = 0;
 
     while (pc >= 0) {
+        count++;
         // Check that PC is in bounds
         if (pc >= memSize) {
             printf("pc = %d\n", pc);
@@ -135,6 +136,7 @@ void execute (Machine *machine) {
     }
 
     free(stack);
+    printf("Executed %d instructions\n", count);
 }
 
 // Frees the memory used by a machine
