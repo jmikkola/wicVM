@@ -2,6 +2,7 @@
 #define INSTRUCTIONS_H
 
 #define MACHINE_DEF_SIZE 64
+#define STACK_DEF_SIZE 1024
 
 typedef struct {
     int opcode;
