@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "map.h"
 #include "read.h"
 #include "instructions.h"
 

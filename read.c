@@ -4,6 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "map.h"
 #include "instructions.h"
 #include "read.h"
 
@@ -51,7 +52,7 @@ Code* newCode () {
     Code *code = malloc(sizeof(Code));
     code->size = 0;
     code->space = DEF_CODE_SIZE;
-    code->list = (Instruction*) calloc(sizeof(Instruction), DEF_CODE_SIZE);
+    code->list = (Operation*) calloc(sizeof(Operation), DEF_CODE_SIZE);
     return code;
 }
 
@@ -64,7 +65,7 @@ void free_code (Code *code) {
 // Adds an instruction to the code object
 void addInstruction (Code *code, char *opcode, char *operand) {
     int opcodeNo, index;
-    Instruction *instr;
+    Operation *instr;
     // Get opcode number    // TODO: add operand # and opcode to the table
     if (strcmp(operand, "label") == 0)
         opcodeNo = labelOp;

@@ -17,11 +17,12 @@ enum OpcodeNo {
 typedef struct {
     int opcode; 
     char operand[OPERAND_SIZE];
-} Instruction;
+} Operation;
 
 typedef struct {
     int size, space;
-    Instruction *list;
+    // TODO: convert to a linked list (doubly?)
+    Operation *list;
 } Code;
 
 

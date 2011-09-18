@@ -1,4 +1,5 @@
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -56,7 +57,8 @@ int mapSet (StringMap *map, char *string, int value) {
     index = shash % map->arrSize;
     map->array[index] = makeMapItem(
         string, value, shash, map->array[index]);
-    return 1; 
+    map->size++;
+    return 0; 
 } 
 
 // Gets an int value from the map
@@ -69,13 +71,26 @@ int mapGet (StringMap *map, char *string) {
 }
 
 // Checks if a string is in the array
-int mapInt (StringMap *map, char *string) {
+int mapIn (StringMap *map, char *string) {
     return findMapItem(map, string) != NULL;
 }
 
 // Returns the size of the map
 int mapSize (StringMap *map) {
     return map->size;
+}
+
+// Print the contents of a map
+void mapPrint (StringMap *map) {
+    int i;
+    MapItem *item;
+    for (i = 0; i < map->arrSize; i++) {
+        item = map->array[i];
+        while (item) {
+            printf("%3d :: \"%s\"[%d]\n", item->value, item->string, item->hash);
+            item = item->next;
+        }
+    }
 }
 
 

@@ -1,19 +1,23 @@
 #ifndef INSTRUCTIONS_H
 #define INSTRUCTIONS_H
 
+#define MACHINE_DEF_SIZE 64
+
 typedef struct {
     int opcode;
     int operand;
-} Location;
+} Instruction;
 
 typedef struct {
     int size;
     int space;
-    Location *data;
+    Instruction *data;
+    StringMap *symbols;
 } Machine;
 
 void execute (Machine *code);
 
+Machine* machineCreate (void);
 void free_machine (Machine *machine);
 
 #endif

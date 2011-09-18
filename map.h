@@ -24,5 +24,6 @@ int mapSet (StringMap *map, char *string, int value);
 int mapGet (StringMap *map, char *string);
 int mapIn (StringMap *map, char *string);
 int mapSize (StringMap *map);
+void mapPrint (StringMap *map);
 
 #endif

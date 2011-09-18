@@ -4,6 +4,7 @@
 #include <time.h>
 
 #include "general.h"
+#include "map.h"
 #include "instructions.h"
 #include "read.h"
 #include "compile.h"
