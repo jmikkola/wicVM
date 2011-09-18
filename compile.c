@@ -14,6 +14,8 @@ StringMap* readJumps (Code *code);
 int hasReference (int opcode);
 int hasLabel (int opcode);
 int getOperand (Operation *op, StringMap *symbols, StringMap *jumps);
+int* makeMemory (StringMap *symbols);
+int isNum (char *str);
 
 // Compiles the code into the memory of the machine
 // (and the symbol table for printing variable names)
@@ -25,7 +27,7 @@ Machine* compile (Code *code) {
     symbols = readSymbols(code);
     // Make jump table
     jumps = readJumps(code);
-    // Generate Memory
+    // Set data and memory
     m = makeMachine(code, symbols, jumps);
     // Jump table no longer needed:
     mapFree(jumps);
@@ -49,9 +51,30 @@ Machine* makeMachine (Code *code, StringMap *symbols, StringMap *jumps) {
         instr->operand = getOperand(op, symbols, jumps);
         ind++;
     }
+    // Set up other parts
+    m->memory = makeMemory(symbols);
     m->symbols = symbols;
     m->size = ind;
     return m;
+}
+
+// Creates an array of memory values
+int* makeMemory (StringMap *symbols) {
+    int i, *mem = (int*) calloc(mapSize(symbols), sizeof(int));
+    MapItem *item;
+    char *str;
+    for (i = 0; i < symbols->arrSize; i++) {
+        item = symbols->array[i];
+        while (item) {
+            str = item->string;
+            // Set memory to 0, unless the string is a number,
+            // in which case set memory to the number
+            mem[item->value] = (isNum(str)) ?
+                atoi(str) : 0;
+            item = item->next;
+        }
+    }
+    return mem;
 }
 
 // Returns the operand value for an instruction
@@ -79,7 +102,8 @@ Machine* machineCreate () {
     m->size = 0;
     m->space = MACHINE_DEF_SIZE;
     m->data = (Instruction*) calloc(MACHINE_DEF_SIZE, sizeof(Instruction));
-    m->symbols = 0;
+    m->symbols = NULL;
+    m->memory = NULL;
     return m;
 }
 
@@ -133,4 +157,19 @@ int hasReference (int opcode) {
 // that has a label reference (j and jf).
 int hasLabel (int opcode) {
     return opcode == jumpOp || opcode == jfOp;
+}
+
+// Checks to see if a string is a number (all numeric)
+int isNum (char *str) {
+    char c;
+    // Return false on an empty string
+    if (! *str) 
+        return 0;
+    while (c = *(str++)) {
+        // Return false on a non-digit
+        if ('0' > c || '9' < c)
+            return 0;
+    }
+    // All 1+ characters were digits, return true
+    return 1;
 }

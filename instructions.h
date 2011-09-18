@@ -13,6 +13,7 @@ typedef struct {
     int space;
     Instruction *data;
     StringMap *symbols;
+    int *memory;
 } Machine;
 
 void execute (Machine *code);
