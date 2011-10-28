@@ -73,6 +73,14 @@ void execute (Machine *machine) {
                 error("Divide by zero");
             *sp /= sp[1];
             break;
+        case modOp:
+            if (sp < stack + 1)
+                error("Insufficient stack size for mod");
+            sp--;
+            if (sp[1] == 0)
+                error("Mod by zero");
+            *sp %= sp[1];
+            break;
         case andOp:
             if (sp < stack + 1)
                 error("Insufficient stack size for and");

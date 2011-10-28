@@ -126,6 +126,7 @@ int getOpcodeNo (char *opcode) {
     if (strcmp(opcode, "sub") == 0)   return subOp;
     if (strcmp(opcode, "mul") == 0)   return mulOp;
     if (strcmp(opcode, "div") == 0)   return divOp;
+    if (strcmp(opcode, "mod") == 0)   return modOp;
     if (strcmp(opcode, "and") == 0)   return andOp;
     if (strcmp(opcode, "or") == 0)    return orOp;
     if (strcmp(opcode, "not") == 0)   return notOp;

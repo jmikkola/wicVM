@@ -8,7 +8,7 @@
 enum OpcodeNo {
     getOp, putOp,  // IO
     pushOp, popOp, // Stack
-    addOp, subOp, mulOp, divOp, // Arithmatic 
+    addOp, subOp, mulOp, divOp, modOp, // Arithmatic 
     andOp, orOp, notOp, // Logic
     tsteqOp, tstneOp, tstltOp, tstleOp, tstgtOp, tstgeOp, // Test
     jumpOp, jfOp, labelOp, haltOp, nopOp // Control
