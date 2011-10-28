@@ -3,7 +3,7 @@
 
 #define OPERAND_SIZE 20
 #define OPCODE_SIZE 6
-#define DEF_CODE_SIZE 64
+#define DEF_CODE_SIZE 512
 
 enum OpcodeNo {
     getOp, putOp,  // IO

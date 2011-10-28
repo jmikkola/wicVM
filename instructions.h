@@ -1,7 +1,7 @@
 #ifndef INSTRUCTIONS_H
 #define INSTRUCTIONS_H
 
-#define MACHINE_DEF_SIZE 64
+#define MACHINE_DEF_SIZE 256
 #define STACK_DEF_SIZE 1024
 
 typedef struct {
