@@ -1,0 +1,8 @@
+errorcases/
+tests/
+*.s
+*~
+*#
+.#*
+*.o
+wici
