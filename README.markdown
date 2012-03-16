@@ -22,6 +22,7 @@ with any number).
 
 Jump statements are in the form `j L1`, where L1 can be any label. The
 two forms of the jump instruction are:
+
 - `j` - Jump unconditionally
 - `jf` - Jump if value on the top of the stack is false (0). This pops
   that value off the top of the stack. 
@@ -32,6 +33,7 @@ The `nop` instruction does nothing.
 Test statements pop the a value off the top of the stack and compare
 it with zero, pushing either 1 (true) or 0 (false) back on to the
 stack. The six test instructions are:
+
 - `tsteq` - equals
 - `tstne` - not equals
 - `tstlt` - less than
